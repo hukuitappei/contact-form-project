@@ -24,6 +24,7 @@ docs/create-pr-phase2-17-18.sh
 docs/fix-pr67-commit-message.sh
 docs/create-pr-phase3-19-fortify.sh
 docs/create-pr-phase3-20-admin-validation.sh
+docs/create-pr-phase3-21-auth-tests.sh
 docs/construction_plan.md
 docs/create-issues.sh
 docs/issue-creation-procedure.md
