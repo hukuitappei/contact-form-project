@@ -17,3 +17,12 @@ yarn-error.log
 /.fleet
 /.idea
 /.vscode
+
+# ローカル作業用（提出には不要）
+docs/construction_plan.md
+docs/create-issues.sh
+docs/issue-creation-procedure.md
+docs/*.xlsx
+docs/*.xlsx:Zone.Identifier
+docs/*.pdf
+.claude/settings.local.json
