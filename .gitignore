@@ -19,6 +19,8 @@ yarn-error.log
 /.vscode
 
 # ローカル作業用（提出には不要）
+docs/contact-controller-test-notes.md
+docs/create-pr-phase2-17-18.sh
 docs/construction_plan.md
 docs/create-issues.sh
 docs/issue-creation-procedure.md
