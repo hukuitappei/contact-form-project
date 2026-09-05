@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Category;
 use App\Models\Tag;
 use App\Http\Requests\StoreContactRequest;
-
+use App\Models\Contact;
 class ContactController extends Controller
 {
     public function index()
@@ -30,5 +30,14 @@ class ContactController extends Controller
             'category' => $category,
             'tags' => $tags
         ]);
+    }
+
+    public function store(StoreContactRequest $request)
+    {
+        $validated = $request->validated();
+        $contact = Contact::create($validated);
+        $contact->tags()->attach(($validated['tag_ids'] ?? []));
+
+        return redirect('/thanks');
     }
 }
