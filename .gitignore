@@ -28,6 +28,7 @@ docs/create-pr-phase3-21-auth-tests.sh
 docs/create-pr-phase4-22-23-admin-index.sh
 docs/create-pr-phase4-24-25-admin-show-destroy.sh
 docs/create-pr-phase4-26-admin-feature-tests.sh
+docs/create-pr-phase5-27-32-tag-management.sh
 docs/construction_plan.md
 docs/create-issues.sh
 docs/issue-creation-procedure.md
