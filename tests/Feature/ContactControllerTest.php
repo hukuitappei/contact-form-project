@@ -5,6 +5,7 @@ namespace Tests\Feature;
 use App\Models\Category;
 use App\Models\Contact;
 use App\Models\Tag;
+use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
@@ -402,5 +403,50 @@ class ContactControllerTest extends TestCase
 
         $response->assertStatus(200);
         $response->assertViewIs('contact.thanks');
+    }
+
+    // --- export ---
+
+    public function test_guest_cannot_export_contacts(): void
+    {
+        $response = $this->get('/contacts/export');
+        $response->assertRedirect('/login');
+    }
+
+    public function test_authenticated_user_can_export_contacts_as_csv(): void
+    {
+        $user = User::factory()->create();
+        Contact::factory()->count(3)->create();
+
+        $response = $this->actingAs($user)->get('/contacts/export');
+        $response->assertStatus(200);
+        $this->assertStringContainsString('text/csv', $response->headers->get('Content-Type'));
+    }
+
+    public function test_export_filters_by_category(): void
+    {
+        $user = User::factory()->create();
+        $categoryA = Category::factory()->create(['content' => 'カテゴリA']);
+        $categoryB = Category::factory()->create(['content' => 'カテゴリB']);
+        $contactA = Contact::factory()->create(['category_id' => $categoryA->id, 'email' => 'a@example.com']);
+        $contactB = Contact::factory()->create(['category_id' => $categoryB->id, 'email' => 'b@example.com']);
+
+        $response = $this->actingAs($user)->get('/contacts/export?'.http_build_query(['category_id' => $categoryA->id]));
+
+        $csv = $response->streamedContent();
+        $this->assertStringContainsString($contactA->email, $csv);
+        $this->assertStringNotContainsString($contactB->email, $csv);
+    }
+
+    public function test_export_without_filters_returns_all_contacts_ordered_by_newest(): void
+    {
+        $user = User::factory()->create();
+        $older = Contact::factory()->create(['email' => 'older@example.com', 'created_at' => now()->subDay()]);
+        $newer = Contact::factory()->create(['email' => 'newer@example.com', 'created_at' => now()]);
+
+        $response = $this->actingAs($user)->get('/contacts/export');
+
+        $csv = $response->streamedContent();
+        $this->assertTrue(strpos($csv, $newer->email) < strpos($csv, $older->email));
     }
 }
