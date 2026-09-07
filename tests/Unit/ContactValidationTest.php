@@ -2,6 +2,7 @@
 
 namespace Tests\Unit;
 
+use App\Http\Requests\ExportContactRequest;
 use App\Http\Requests\IndexContactRequest;
 use App\Http\Requests\StoreContactRequest;
 use App\Models\Category;
@@ -35,6 +36,11 @@ class ContactValidationTest extends TestCase
     private function indexRules(): array
     {
         return (new IndexContactRequest)->rules();
+    }
+
+    private function exportRules(): array
+    {
+        return (new ExportContactRequest)->rules();
     }
 
     // --- StoreContactRequest ---
@@ -140,6 +146,36 @@ class ContactValidationTest extends TestCase
     public function test_index_rejects_nonexistent_category_id(): void
     {
         $validator = Validator::make(['category_id' => 9999], $this->indexRules());
+        $this->assertTrue($validator->fails());
+    }
+
+    // --- ExportContactRequest ---
+
+    public function test_export_accepts_all_filters_together(): void
+    {
+        $category = Category::factory()->create();
+
+        $data = ['keyword' => 'id', 'gender' => 1, 'category_id' => $category->id, 'date' => '2026-01-01'];
+        $validator = Validator::make($data, $this->exportRules());
+
+        $this->assertTrue($validator->passes());
+    }
+
+    public function test_export_accepts_empty_filters(): void
+    {
+        $validator = Validator::make([], $this->exportRules());
+        $this->assertTrue($validator->passes());
+    }
+
+    public function test_export_rejects_invalid_gender_value(): void
+    {
+        $validator = Validator::make(['gender' => 9], $this->exportRules());
+        $this->assertTrue($validator->fails());
+    }
+
+    public function test_export_rejects_nonexistent_category_id(): void
+    {
+        $validator = Validator::make(['category_id' => 9999], $this->exportRules());
         $this->assertTrue($validator->fails());
     }
 }
