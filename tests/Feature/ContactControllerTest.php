@@ -2,11 +2,11 @@
 
 namespace Tests\Feature;
 
+use App\Models\Category;
+use App\Models\Contact;
+use App\Models\Tag;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
-use App\Models\Category;
-use App\Models\Tag;
-use App\Models\Contact;
 
 class ContactControllerTest extends TestCase
 {
@@ -179,7 +179,7 @@ class ContactControllerTest extends TestCase
     public function test_store_fails_validation_when_tel_is_too_short(): void
     {
         $category = Category::factory()->create();
-        $data = $this->validContactData(['category_id' => $category->id, 'tel' => '012345678',]);
+        $data = $this->validContactData(['category_id' => $category->id, 'tel' => '012345678']);
         $response = $this->post('/contacts', $data);
         $response->assertSessionHasErrors(['tel']);
     }
@@ -187,7 +187,7 @@ class ContactControllerTest extends TestCase
     public function test_store_fails_validation_when_tel_is_too_long(): void
     {
         $category = Category::factory()->create();
-        $data = $this->validContactData(['category_id' => $category->id, 'tel' => '012345678910',]);
+        $data = $this->validContactData(['category_id' => $category->id, 'tel' => '012345678910']);
         $response = $this->post('/contacts', $data);
         $response->assertSessionHasErrors(['tel']);
 
@@ -196,7 +196,7 @@ class ContactControllerTest extends TestCase
     public function test_store_fails_validation_when_tel_contains_non_numeric_characters(): void
     {
         $category = Category::factory()->create();
-        $data = $this->validContactData(['category_id' => $category->id, 'tel' => '0123-4567-8910',]);
+        $data = $this->validContactData(['category_id' => $category->id, 'tel' => '0123-4567-8910']);
         $response = $this->post('/contacts', $data);
         $response->assertSessionHasErrors(['tel']);
     }
@@ -266,8 +266,8 @@ class ContactControllerTest extends TestCase
 
         $response->assertStatus(200);
         $response->assertViewIs('contact.index');
-        $response->assertViewHas('categories', fn($categories) => $categories->isEmpty());
-        $response->assertViewHas('tags', fn($tags) => $tags->isEmpty());
+        $response->assertViewHas('categories', fn ($categories) => $categories->isEmpty());
+        $response->assertViewHas('tags', fn ($tags) => $tags->isEmpty());
     }
 
     public function test_store_fails_validation_when_first_name_exceeds_max_length(): void
@@ -317,7 +317,7 @@ class ContactControllerTest extends TestCase
         $category = Category::factory()->create();
         $data = $this->validContactData([
             'category_id' => $category->id,
-            'email' => str_repeat('a', 250) . '@ex.com',
+            'email' => str_repeat('a', 250).'@ex.com',
         ]);
 
         $response = $this->post('/contacts', $data);
@@ -357,7 +357,7 @@ class ContactControllerTest extends TestCase
         $category = Category::factory()->create();
         $data = $this->validContactData([
             'category_id' => $category->id,
-            'building' => str_repeat('a', 250) . 'マンション101',
+            'building' => str_repeat('a', 250).'マンション101',
         ]);
 
         $response = $this->post('/contacts', $data);

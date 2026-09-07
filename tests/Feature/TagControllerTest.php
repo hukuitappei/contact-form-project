@@ -42,7 +42,7 @@ class TagControllerTest extends TestCase
     {
         $tag = Tag::factory()->create();
 
-        $response = $this->get('/admin/tags/' . $tag->id . '/edit');
+        $response = $this->get('/admin/tags/'.$tag->id.'/edit');
 
         $response->assertRedirect('/login');
     }
@@ -52,7 +52,7 @@ class TagControllerTest extends TestCase
         $user = User::factory()->create();
         $tag = Tag::factory()->create();
 
-        $response = $this->actingAs($user)->get('/admin/tags/' . $tag->id . '/edit');
+        $response = $this->actingAs($user)->get('/admin/tags/'.$tag->id.'/edit');
 
         $response->assertStatus(200);
         $response->assertViewIs('admin.tags.edit');
@@ -63,7 +63,7 @@ class TagControllerTest extends TestCase
     {
         $tag = Tag::factory()->create(['name' => '質問']);
 
-        $response = $this->put('/admin/tags/' . $tag->id, ['name' => '要望']);
+        $response = $this->put('/admin/tags/'.$tag->id, ['name' => '要望']);
 
         $response->assertRedirect('/login');
         $this->assertDatabaseHas('tags', ['id' => $tag->id, 'name' => '質問']);
@@ -74,7 +74,7 @@ class TagControllerTest extends TestCase
         $user = User::factory()->create();
         $tag = Tag::factory()->create(['name' => '質問']);
 
-        $response = $this->actingAs($user)->put('/admin/tags/' . $tag->id, ['name' => '要望']);
+        $response = $this->actingAs($user)->put('/admin/tags/'.$tag->id, ['name' => '要望']);
 
         $response->assertRedirect('/admin');
         $this->assertDatabaseHas('tags', ['id' => $tag->id, 'name' => '要望']);
@@ -86,7 +86,7 @@ class TagControllerTest extends TestCase
         $tag = Tag::factory()->create(['name' => '質問']);
         $other = Tag::factory()->create(['name' => '要望']);
 
-        $response = $this->actingAs($user)->put('/admin/tags/' . $tag->id, ['name' => '要望']);
+        $response = $this->actingAs($user)->put('/admin/tags/'.$tag->id, ['name' => '要望']);
 
         $response->assertSessionHasErrors(['name']);
     }
@@ -95,7 +95,7 @@ class TagControllerTest extends TestCase
     {
         $tag = Tag::factory()->create();
 
-        $response = $this->delete('/admin/tags/' . $tag->id);
+        $response = $this->delete('/admin/tags/'.$tag->id);
 
         $response->assertRedirect('/login');
         $this->assertDatabaseHas('tags', ['id' => $tag->id]);
@@ -106,7 +106,7 @@ class TagControllerTest extends TestCase
         $user = User::factory()->create();
         $tag = Tag::factory()->create();
 
-        $response = $this->actingAs($user)->delete('/admin/tags/' . $tag->id);
+        $response = $this->actingAs($user)->delete('/admin/tags/'.$tag->id);
 
         $response->assertRedirect('/admin');
         $this->assertDatabaseMissing('tags', ['id' => $tag->id]);
