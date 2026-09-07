@@ -38,7 +38,7 @@ class AdminControllerTest extends TestCase
         $match = Contact::factory()->create(['first_name' => '検索太郎']);
         $other = Contact::factory()->create(['first_name' => '別人']);
 
-        $response = $this->actingAs($user)->get('/admin?' . http_build_query(['keyword' => '検索太郎']));
+        $response = $this->actingAs($user)->get('/admin?'.http_build_query(['keyword' => '検索太郎']));
 
         $response->assertSee($match->first_name);
         $response->assertDontSee($other->first_name);
@@ -50,7 +50,7 @@ class AdminControllerTest extends TestCase
         $male = Contact::factory()->create(['gender' => 1]);
         $female = Contact::factory()->create(['gender' => 2]);
 
-        $response = $this->actingAs($user)->get('/admin?' . http_build_query(['gender' => 1]));
+        $response = $this->actingAs($user)->get('/admin?'.http_build_query(['gender' => 1]));
 
         $response->assertSee($male->email);
         $response->assertDontSee($female->email);
@@ -64,7 +64,7 @@ class AdminControllerTest extends TestCase
         $matched = Contact::factory()->create(['category_id' => $categoryA->id]);
         $other = Contact::factory()->create(['category_id' => $categoryB->id]);
 
-        $response = $this->actingAs($user)->get('/admin?' . http_build_query(['category_id' => $categoryA->id]));
+        $response = $this->actingAs($user)->get('/admin?'.http_build_query(['category_id' => $categoryA->id]));
 
         $response->assertSee($matched->email);
         $response->assertDontSee($other->email);
@@ -82,7 +82,7 @@ class AdminControllerTest extends TestCase
         $other->created_at = '2026-02-01 10:00:00';
         $other->save();
 
-        $response = $this->actingAs($user)->get('/admin?' . http_build_query(['date' => '2026-01-01']));
+        $response = $this->actingAs($user)->get('/admin?'.http_build_query(['date' => '2026-01-01']));
 
         $response->assertSee($matched->email);
         $response->assertDontSee($other->email);
@@ -102,7 +102,7 @@ class AdminControllerTest extends TestCase
     {
         $contact = Contact::factory()->create();
 
-        $response = $this->get('/admin/contacts/' . $contact->id);
+        $response = $this->get('/admin/contacts/'.$contact->id);
 
         $response->assertRedirect('/login');
     }
@@ -112,7 +112,7 @@ class AdminControllerTest extends TestCase
         $user = User::factory()->create();
         $contact = Contact::factory()->create();
 
-        $response = $this->actingAs($user)->get('/admin/contacts/' . $contact->id);
+        $response = $this->actingAs($user)->get('/admin/contacts/'.$contact->id);
 
         $response->assertStatus(200);
         $response->assertViewIs('admin.show');
@@ -132,7 +132,7 @@ class AdminControllerTest extends TestCase
     {
         $contact = Contact::factory()->create();
 
-        $response = $this->delete('/admin/contacts/' . $contact->id);
+        $response = $this->delete('/admin/contacts/'.$contact->id);
 
         $response->assertRedirect('/login');
         $this->assertDatabaseHas('contacts', ['id' => $contact->id]);
@@ -143,7 +143,7 @@ class AdminControllerTest extends TestCase
         $user = User::factory()->create();
         $contact = Contact::factory()->create();
 
-        $response = $this->actingAs($user)->delete('/admin/contacts/' . $contact->id);
+        $response = $this->actingAs($user)->delete('/admin/contacts/'.$contact->id);
 
         $response->assertRedirect('/admin');
         $this->assertDatabaseMissing('contacts', ['id' => $contact->id]);

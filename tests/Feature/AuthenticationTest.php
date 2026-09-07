@@ -2,9 +2,9 @@
 
 namespace Tests\Feature;
 
+use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
-use App\Models\User;
 
 class AuthenticationTest extends TestCase
 {
@@ -62,9 +62,10 @@ class AuthenticationTest extends TestCase
 
     public function test_register_fails_validation_when_password_is_missing(): void
     {
-        $response = $this->post(route('register'), $this->validRegisterData(['password' => '', 'password_confirmation' => '']), );
+        $response = $this->post(route('register'), $this->validRegisterData(['password' => '', 'password_confirmation' => '']));
         $response->assertSessionHasErrors(['password']);
     }
+
     public function test_register_fails_validation_when_password_is_too_short(): void
     {
         $data = $this->validRegisterData([

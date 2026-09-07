@@ -15,7 +15,7 @@ class TagValidationTest extends TestCase
 
     private function storeRules(): array
     {
-        return (new StoreTagRequest())->rules();
+        return (new StoreTagRequest)->rules();
     }
 
     private function updateRulesIgnoring(int $tagId): array

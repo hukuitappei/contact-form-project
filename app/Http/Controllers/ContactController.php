@@ -2,10 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Category;
-use App\Models\Tag;
 use App\Http\Requests\StoreContactRequest;
+use App\Models\Category;
 use App\Models\Contact;
+use App\Models\Tag;
+
 class ContactController extends Controller
 {
     public function index()
@@ -28,7 +29,7 @@ class ContactController extends Controller
         return view('contact.confirm', [
             'validated' => $validated,
             'category' => $category,
-            'tags' => $tags
+            'tags' => $tags,
         ]);
     }
 
@@ -40,9 +41,9 @@ class ContactController extends Controller
 
         return redirect('/thanks');
     }
+
     public function thanks()
     {
         return view('contact.thanks');
     }
-
 }
