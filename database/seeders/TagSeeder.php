@@ -2,14 +2,13 @@
 
 namespace Database\Seeders;
 
+use App\Models\Tag;
 use Illuminate\Database\Seeder;
-use Illuminate\Support\Facades\DB;
 
 class TagSeeder extends Seeder
 {
     public function run(): void
     {
-        $now = now();
 
         $tags = [
             '質問',
@@ -20,10 +19,8 @@ class TagSeeder extends Seeder
         ];
 
         foreach ($tags as $name) {
-            DB::table('tags')->insert([
+            Tag::create([
                 'name' => $name,
-                'created_at' => $now,
-                'updated_at' => $now,
             ]);
         }
     }

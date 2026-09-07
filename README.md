@@ -19,6 +19,7 @@ CSVエクスポート・APIは今後実装予定です。
 | Laravel | 10.x |
 | MySQL | 8.0 |
 | フロントエンド | Tailwind CSS 3.4 / Alpine.js / Vite |
+| Webサーバー | Nginx |
 | 開発環境 | Laravel Sail (Docker) |
 | テスト | PHPUnit / Pest（カバレッジ: PCOV） |
 
@@ -60,3 +61,7 @@ cp .env.example .env
 ## ER図
 
 テーブル構成・リレーションは [`docs/er-diagram.md`](docs/er-diagram.md) を参照してください。
+
+## 作成者
+
+福井達平

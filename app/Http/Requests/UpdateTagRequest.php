@@ -27,9 +27,9 @@ class UpdateTagRequest extends FormRequest
     public function messages(): array
     {
         return [
-            'name.required' => '名前は必須です。',
-            'name.max' => '名前は50文字以内で入力してください。',
-            'name.unique' => 'この名前は既に使用されています。',
+            'name.required' => 'タグ名を入力してください',
+            'name.max' => 'タグ名は50文字以内で入力してください',
+            'name.unique' => 'そのタグ名は既に使用されています',
         ];
     }
 }

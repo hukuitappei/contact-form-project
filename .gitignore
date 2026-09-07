@@ -30,6 +30,7 @@ docs/create-pr-phase4-24-25-admin-show-destroy.sh
 docs/create-pr-phase4-26-admin-feature-tests.sh
 docs/create-pr-phase5-27-32-tag-management.sh
 docs/create-pr-phase6-33-34-49-quality-and-tests.sh
+docs/create-pr-phase6-77-78-quality-fixes.sh
 docs/progress.md
 docs/construction_plan.md
 docs/create-issues.sh

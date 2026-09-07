@@ -2,14 +2,13 @@
 
 namespace Database\Seeders;
 
+use App\Models\Category;
 use Illuminate\Database\Seeder;
-use Illuminate\Support\Facades\DB;
 
 class CategorySeeder extends Seeder
 {
     public function run(): void
     {
-        $now = now();
 
         $categories = [
             '商品のお届けについて',
@@ -20,10 +19,8 @@ class CategorySeeder extends Seeder
         ];
 
         foreach ($categories as $content) {
-            DB::table('categories')->insert([
+            Category::create([
                 'content' => $content,
-                'created_at' => $now,
-                'updated_at' => $now,
             ]);
         }
     }
