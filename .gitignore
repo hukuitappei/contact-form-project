@@ -34,6 +34,7 @@ docs/create-pr-phase6-77-78-quality-fixes.sh
 docs/create-pr-phase7-35-36-37-csv-export.sh
 docs/create-pr-phase7-readme-update.sh
 docs/create-pr-phase8-38-45-public-api.sh
+docs/create-pr-phase8-46-api-feature-tests.sh
 docs/progress.md
 docs/construction_plan.md
 docs/create-issues.sh
