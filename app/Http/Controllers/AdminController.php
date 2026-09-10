@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\IndexContactRequest;
 use App\Models\Category;
 use App\Models\Contact;
+use App\Models\Tag;
 
 class AdminController extends Controller
 {
@@ -17,7 +18,7 @@ class AdminController extends Controller
     {
         $validated = $request->validated();
 
-        $query = Contact::query();
+        $query = Contact::with(['category', 'tags']);
         if ($validated['keyword'] ?? null) {
             $keyword = $validated['keyword'];
             $query->where(function ($q) use ($keyword) {
@@ -41,15 +42,19 @@ class AdminController extends Controller
 
         $contacts = $query->paginate(7);
         $categories = Category::all();
+        $tags = Tag::all();
 
         return view('admin.index', [
             'contacts' => $contacts,
             'categories' => $categories,
+            'tags' => $tags,
         ]);
     }
 
     public function show(Contact $contact)
     {
+        $contact->load(['category', 'tags']);
+
         return view('admin.show', compact('contact'));
     }
 
