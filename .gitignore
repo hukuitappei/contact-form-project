@@ -35,7 +35,9 @@ docs/create-pr-phase7-35-36-37-csv-export.sh
 docs/create-pr-phase7-readme-update.sh
 docs/create-pr-phase8-38-45-public-api.sh
 docs/create-pr-phase8-46-api-feature-tests.sh
+docs/create-pr-phase9-47-48-final-check.sh
 docs/progress.md
+docs/requirements-checklist.md
 docs/construction_plan.md
 docs/create-issues.sh
 docs/issue-creation-procedure.md
