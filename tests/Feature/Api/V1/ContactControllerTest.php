@@ -4,6 +4,7 @@ namespace Tests\Feature\Api\V1;
 
 use App\Models\Category;
 use App\Models\Contact;
+use App\Models\Tag;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
@@ -35,6 +36,36 @@ class ContactControllerTest extends TestCase
         $response->assertJsonCount(1, 'data');
     }
 
+    public function test_index_filters_by_keyword(): void
+    {
+        $categoryA = Category::factory()->create();
+        $categoryB = Category::factory()->create();
+        Contact::factory()->create(['category_id' => $categoryA->id, 'first_name' => '山田', 'last_name' => '太郎']);
+        Contact::factory()->create(['category_id' => $categoryB->id, 'first_name' => '鈴木', 'last_name' => '花子']);
+        $response = $this->getJson('/api/v1/contacts?keyword=鈴木');
+
+        $response->assertStatus(200);
+        $response->assertJsonCount(1, 'data');
+    }
+
+    public function test_index_filters_by_gender(): void
+    {
+        Contact::factory()->create(['gender' => 1]);
+        Contact::factory()->create(['gender' => 2]);
+        $response = $this->getJson('/api/v1/contacts?gender=1');
+        $response->assertStatus(200);
+        $response->assertJsonCount(1, 'data');
+    }
+
+    public function test_index_filters_by_date(): void
+    {
+        Contact::factory()->create(['created_at' => '2026-01-01']);
+        Contact::factory()->create(['created_at' => '2026-02-01']);
+        $response = $this->getJson('/api/v1/contacts?date=2026-01-01');
+        $response->assertStatus(200);
+        $response->assertJsonCount(1, 'data');
+    }
+
     public function test_index_returns_422_for_invalid_gender(): void
     {
         $response = $this->getJson('/api/v1/contacts?gender=9');
@@ -47,6 +78,15 @@ class ContactControllerTest extends TestCase
         $response = $this->getJson("/api/v1/contacts/{$contact->id}");
         $response->assertStatus(200);
         $response->assertJsonPath('data.id', $contact->id);
+    }
+
+    public function test_show_returns_contact_with_tags(): void
+    {
+        $contact = Contact::factory()->create();
+        $tag = Tag::factory()->create();
+        $contact->tags()->attach($tag->id);
+        $response = $this->getJson("/api/v1/contacts/{$contact->id}");
+        $response->assertJsonPath('data.tags.0.id', $tag->id);
     }
 
     public function test_show_returns_404_for_nonexistent_id(): void
@@ -82,7 +122,7 @@ class ContactControllerTest extends TestCase
 
     public function test_store_returns_422_for_invalid_data(): void
     {
-        $response = $this->postJson('/api/v1/contacts', []); // 必須項目が全て欠けたデータ
+        $response = $this->postJson('/api/v1/contacts', []);
         $response->assertStatus(422);
     }
 
