@@ -45,13 +45,20 @@ docker run --rm -u "$(id -u):$(id -g)" -v "$(pwd):/var/www/html" -w /var/www/htm
 # フロントエンド依存関係インストール
 ./vendor/bin/sail npm install
 
+# フロントエンドビルド（public/build/manifest.jsonを生成。これが無いと画面表示・
+# ビュー系テストが「Vite manifest not found」で500エラーになります）
+./vendor/bin/sail npm run build
+
 # マイグレーション実行
 ./vendor/bin/sail artisan migrate
 
 # シーディング
 ./vendor/bin/sail artisan db:seed
+```
 
-# フロントエンドビルド（開発中はwatch）
+開発中にフロントエンドを変更しながら確認したい場合は、別ターミナルで以下を起動してください（起動中はホットリロードされ、`npm run build`で作った成果物は不要になります）。
+
+```bash
 ./vendor/bin/sail npm run dev
 ```
 
