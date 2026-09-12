@@ -2,11 +2,11 @@
 
 namespace Database\Factories;
 
-use App\Models\Category;
+use App\Models\Tag;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
- * @extends Factory<Category>
+ * @extends Factory<Tag>
  */
 class TagFactory extends Factory
 {
