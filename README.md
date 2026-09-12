@@ -25,17 +25,25 @@ COACHTECH確認テスト課題「新お問い合わせフォーム」の実装�
 
 ## 環境構築
 
+前提: Docker Desktop（WSL2バックエンド）を起動しておいてください。
+
 ```bash
-# コンテナ起動
+# .env 準備
+cp .env.example .env
+
+# 依存関係インストール（初回のみ・vendor/が無い状態で実行）
+# ローカルにcomposerが無くてもDockerコンテナ経由でインストールできます
+docker run --rm -u "$(id -u):$(id -g)" -v "$(pwd):/var/www/html" -w /var/www/html \
+    laravelsail/php83-composer:latest composer install --ignore-platform-reqs
+
+# コンテナ起動（初回インストール完了後、vendor/bin/sailが使えるようになります）
 ./vendor/bin/sail up -d
 
-# 依存関係インストール（初回のみ）
-./vendor/bin/sail composer install
-./vendor/bin/sail npm install
-
-# .env 準備・アプリキー生成
-cp .env.example .env
+# アプリキー生成
 ./vendor/bin/sail artisan key:generate
+
+# フロントエンド依存関係インストール
+./vendor/bin/sail npm install
 
 # マイグレーション実行
 ./vendor/bin/sail artisan migrate

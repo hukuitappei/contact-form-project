@@ -45,6 +45,12 @@ docs/create-issue-phase9-57-fresh-env-reproduction.sh
 docs/verify-fresh-env-phase9-57.sh
 docs/create-issue-phase9-58-env-example-dbhost.sh
 docs/create-pr-phase9-54-55-58-handler-tagfactory-env-fix.sh
+docs/stop-verify-containers.sh
+docs/start-main-env-and-test.sh
+docs/summarize-test-failures.sh
+docs/close-issue-91-comment-92.sh
+docs/create-issue-phase9-59-readme-setup-order.sh
+docs/create-pr-phase9-59-readme-setup-order.sh
 docs/progress.md
 docs/requirements-checklist.md
 docs/construction_plan.md
