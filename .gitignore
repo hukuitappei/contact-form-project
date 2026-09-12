@@ -38,6 +38,13 @@ docs/create-pr-phase8-46-api-feature-tests.sh
 docs/create-pr-phase9-47-48-final-check.sh
 docs/create-issue-phase9-final-audit.sh
 docs/create-pr-phase9-53-admin-tags-n1-fix.sh
+docs/create-issue-phase9-54-modelnotfound.sh
+docs/create-issue-phase9-55-tagfactory-fix.sh
+docs/create-issue-phase9-56-coverage-gaps.sh
+docs/create-issue-phase9-57-fresh-env-reproduction.sh
+docs/verify-fresh-env-phase9-57.sh
+docs/create-issue-phase9-58-env-example-dbhost.sh
+docs/create-pr-phase9-54-55-58-handler-tagfactory-env-fix.sh
 docs/progress.md
 docs/requirements-checklist.md
 docs/construction_plan.md
