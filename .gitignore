@@ -51,6 +51,8 @@ docs/summarize-test-failures.sh
 docs/close-issue-91-comment-92.sh
 docs/create-issue-phase9-59-readme-setup-order.sh
 docs/create-pr-phase9-59-readme-setup-order.sh
+docs/create-issue-phase9-60-vite-manifest.sh
+docs/create-pr-phase9-60-vite-manifest.sh
 docs/progress.md
 docs/requirements-checklist.md
 docs/construction_plan.md
